@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - chao
+  - player1
+  - player2
+  - asteroid
+  - inimigo
+  - boss
+  - powerUp
+  - lifeUp
+  - tiro1
+  - tiro2
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - interface
+  - SFX
+  - gameplay
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: background
+    uniqueID: 1598927355
+    locked: 0
+  - name: gameplay
+    uniqueID: 1069748501
+    locked: 0
+  - name: sfx
+    uniqueID: 4125208861
+    locked: 0
+  - name: UI
+    uniqueID: 3158677845
+    locked: 0
