@@ -4,22 +4,33 @@ using UnityEngine;
 
 public class playerControler : MonoBehaviour {
 
-	public static int playerNum; //Caso for player 1 == 1;
+	public int playerNum; //Caso for player 1 == 1;
 	public int playerLife = 3; 	//vida do jogador
 	public float veloMotor,velocidade,tiroSeg,velocidadeRotacao,rotacaoInput,fire_rate;
 	public GameObject shot,mira1,playerExplosion;
 	public Rigidbody2D rb;
 	private float nextFire;
+	private string Horizontal, Vertical, Fire1;
 	// Use this for initialization
 	void Start () {
-		
+		if(playerNum == 10)
+		{
+			Horizontal ="Horizontal";
+			Vertical = "Verical";
+			Fire1 = "Fire1";	
+		}
+		else
+		{
+			Horizontal ="Horizontal2";
+			Vertical = "Verical2";
+			Fire1 = "Fire2";
+		}
 	}
-	
 	// Update is called once per frame
 	void Update () {
 
-		rotacaoInput = -Input.GetAxisRaw("Horizontal");
-		veloMotor = Input.GetAxis("Vertical");	
+		rotacaoInput = -Input.GetAxisRaw(Horizontal);
+		veloMotor = Input.GetAxis(Vertical);	
 
     	// Aplicamos a velocidade angular diretamente no Rigidbody
     	rb.angularVelocity = rotacaoInput * velocidadeRotacao;
@@ -31,7 +42,7 @@ public class playerControler : MonoBehaviour {
 
 		//if (Input.GetButton("Jump")  && Time.time > nextFire && UI_Manager.isPaused==false && player_IsAtive==true) {
 			
-		if (Input.GetButton("Fire1")  && Time.time > nextFire){
+		if (Input.GetButton(Fire1)  && Time.time > nextFire){
 		nextFire = Time.time + fire_rate;				
 		Instantiate(shot, mira1.transform.position, mira1.transform.rotation);
 		}
