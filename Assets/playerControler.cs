@@ -4,59 +4,48 @@ using UnityEngine;
 
 public class playerControler : MonoBehaviour {
 
-	public int playerNum; //Caso for player 1 == 1;
+	public static int playerNum; //Caso for player 1 == 1;
 	public int playerLife = 3; 	//vida do jogador
 	public float veloMotor,velocidade,tiroSeg,velocidadeRotacao,rotacaoInput,fire_rate;
+	public float desaceleracao = 1.5f;
+	public float forcaFreio = 5f;
 	public GameObject shot,mira1,playerExplosion;
 	public Rigidbody2D rb;
 	private float nextFire;
-	private string Horizontal, Vertical, Fire1;
-	// Use this for initialization
+	
 	void Start () {
-		if(playerNum == 10)
-		{
-			Horizontal ="Horizontal";
-			Vertical = "Verical";
-			Fire1 = "Fire1";	
-		}
-		else
-		{
-			Horizontal ="Horizontal2";
-			Vertical = "Verical2";
-			Fire1 = "Fire2";
+		if(rb == null) {
+			rb = GetComponent<Rigidbody2D>();
 		}
 	}
-	// Update is called once per frame
-	void Update () {
+	void Update ()	{
 
-		rotacaoInput = -Input.GetAxisRaw(Horizontal);
-		veloMotor = Input.GetAxis(Vertical);	
+		rotacaoInput = -Input.GetAxis("Vertical");
 
-    	// Aplicamos a velocidade angular diretamente no Rigidbody
-    	rb.angularVelocity = rotacaoInput * velocidadeRotacao;
+		rb.angularVelocity = rotacaoInput * velocidadeRotacao;
 
-		if (veloMotor > 0f)
+		if (veloMotor > 0f)	{
+		rb.AddForce(transform.up * veloMotor * velocidade);
+		}
+		else if (veloMotor < 0f)
 		{
-        rb.AddForce(transform.up * veloMotor * velocidade);
-    	}	
-
-		//if (Input.GetButton("Jump")  && Time.time > nextFire && UI_Manager.isPaused==false && player_IsAtive==true) {
-			
-		if (Input.GetButton(Fire1)  && Time.time > nextFire){
-		nextFire = Time.time + fire_rate;				
-		Instantiate(shot, mira1.transform.position, mira1.transform.rotation);
+		rb.velocity = Vector2.MoveTowards(rb.velocity, Vector2.zero, forcaFreio * Time.deltaTime);
 		}
-
+		else		{
+		rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, desaceleracao * Time.deltaTime);
+		}	
+		if (Input.GetButton("Fire1") && Time.time > nextFire){
+			nextFire = Time.time + fire_rate;
+			Instantiate(shot, mira1.transform.position, mira1.transform.rotation);
+		}
+	}
+	void OnTriggerEnter2D (Collider2D collider){
 		
-
-	}	
-
-	void OnTriggerEnter2D ( Collider2D collider ) {
-
-		print("BATEU");
 		if(collider.gameObject.tag == "asteroid" || collider.gameObject.tag == "inimigo" || collider.gameObject.tag == "boss"){
-		Instantiate(playerExplosion, transform.position, Quaternion.identity);	
-		Destroy(this.gameObject,0F);
+
+			Instantiate(playerExplosion, transform.position, Quaternion.identity);
+			Destroy(this.gameObject, 0F);
 		}
-	}	
-}
+	}
+}	
+
