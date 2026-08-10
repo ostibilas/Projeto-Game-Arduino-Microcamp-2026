@@ -57,7 +57,18 @@ public class playerControler : MonoBehaviour {
         print("BATEU");
         if(collider.gameObject.tag == "asteroid" || collider.gameObject.tag == "inimigo" || collider.gameObject.tag == "boss"){
             Instantiate(playerExplosion, transform.position, Quaternion.identity);  
+            stageManagerScript.player1Life--;
+            switch (playerNum)
+            { 
+                case 1:
+                comando;
+                break; 
+             default: comando ; break}
+            stageManagerScript.
             Destroy(this.gameObject, 0F);
+
+            IEnumerator Rotina() {}
+
         }
     }   
 }
