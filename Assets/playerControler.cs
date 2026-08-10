@@ -15,6 +15,7 @@ public class playerControler : MonoBehaviour {
     public GameObject shot, mira1, playerExplosion;
     public Rigidbody2D rb;
     private float nextFire;
+    
 
     void Start () {
         if (rb == null) {
@@ -58,7 +59,9 @@ public class playerControler : MonoBehaviour {
         if(collider.gameObject.tag == "asteroid" || collider.gameObject.tag == "inimigo" || collider.gameObject.tag == "boss"){
             Instantiate(playerExplosion, transform.position, Quaternion.identity);  
             stageManagerScript.player1Life--;
-            switch (playerNum)
+            Destroy(this.gameObject, 0F);
+            
+            /*switch (playerNum)
             { 
                 case 1:
                 comando;
@@ -67,7 +70,7 @@ public class playerControler : MonoBehaviour {
             stageManagerScript.
             Destroy(this.gameObject, 0F);
 
-            IEnumerator Rotina() {}
+            IEnumerator Rotina() {}*/
 
         }
     }   

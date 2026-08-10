@@ -41,15 +41,16 @@ public class asteroidScript : MonoBehaviour {
 	void OnTriggerEnter2D ( Collider2D collider ) {
 		
 
-		if(collider.gameObject.tag == "tiro1" || collider.gameObject.tag == "tiro2"){
+		if(collider.gameObject.tag == "tiro1"){
 		
 		switch (tamanho)
-		{
+			{
 			 case 3: 
 			 Instantiate(explosion, this.transform.position, this.transform.rotation);
 			 
 			 Instantiate(asteroid2, transform.position, Quaternion.identity);
 			 Instantiate(asteroid2, transform.position, Quaternion.identity);
+			 stageManagerScript.ScorePlayer1+= 100f;
 			 Destroy(this.gameObject,0f);
 			 break;
 
@@ -58,18 +59,50 @@ public class asteroidScript : MonoBehaviour {
 
 			 Instantiate(asteroid1, transform.position, Quaternion.identity);
 			 Instantiate(asteroid1, transform.position, Quaternion.identity);
+			 stageManagerScript.ScorePlayer1+= 50f;
 			 Destroy(this.gameObject,0f);
 			 break;
 			 
 			 case 1: 
-			 
+			 Instantiate(explosion, this.transform.position, this.transform.rotation);
+			 stageManagerScript.ScorePlayer1+= 50f;
 			 Destroy(this.gameObject,0f);
 			 break;  
-		}
-
-	
+			}
 
 		}
+		
+		if(collider.gameObject.tag == "tiro2"){
+		
+		switch (tamanho)
+			{
+			 case 3: 
+			 Instantiate(explosion, this.transform.position, this.transform.rotation);
+			 
+			 Instantiate(asteroid2, transform.position, Quaternion.identity);
+			 Instantiate(asteroid2, transform.position, Quaternion.identity);
+			 stageManagerScript.ScorePlayer2+= 100f;
+			 Destroy(this.gameObject,0f);
+			 break;
+
+			 case 2: 
+			 Instantiate(explosion, this.transform.position, this.transform.rotation);
+
+			 Instantiate(asteroid1, transform.position, Quaternion.identity);
+			 Instantiate(asteroid1, transform.position, Quaternion.identity);
+			 stageManagerScript.ScorePlayer2+= 50f;
+			 Destroy(this.gameObject,0f);
+			 break;
+			 
+			 case 1: 
+			 Instantiate(explosion, this.transform.position, this.transform.rotation);
+			 stageManagerScript.ScorePlayer2+= 50f;
+			 Destroy(this.gameObject,0f);
+			 break;  
+			}
+
+		}
+
 	}
 
 }
