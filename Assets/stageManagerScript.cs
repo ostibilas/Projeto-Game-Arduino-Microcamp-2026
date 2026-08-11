@@ -29,8 +29,8 @@ public class stageManagerScript : MonoBehaviour {
 	TXT_PontosP1.text = "Pontos P1: " + ((int)ScorePlayer1).ToString("D6");
 	TXT_LIFEP1.text = "Vidas = " + ((int)player1Life).ToString("D2");
 	//=========================Player2=====================================
-	TXT_PontosP2.text = "Pontos P1: " + ((int)ScorePlayer1).ToString("D6");
-	TXT_LIFEP2.text = "Vidas = " + ((int)player1Life).ToString("D2");
+	TXT_PontosP2.text = "Pontos P1: " + ((int)ScorePlayer2).ToString("D6");
+	TXT_LIFEP2.text = "Vidas = " + ((int)player2Life).ToString("D2");
 	
 		
 	}
@@ -40,7 +40,7 @@ public class stageManagerScript : MonoBehaviour {
 	
 	if(numPlayer==2){
 		atualPlayer1 = Instantiate(PlayerOne, transform.position, Quaternion.identity);
-		atualPlayer2 = Instantiate(PlayerTwo, transform.position, Quaternion.identity);		
+		atualPlayer2 = Instantiate(PlayerTwo, -transform.position, Quaternion.identity);		
 	}else{
 		atualPlayer1 = Instantiate(PlayerOne, transform.position, Quaternion.identity);	
 	}

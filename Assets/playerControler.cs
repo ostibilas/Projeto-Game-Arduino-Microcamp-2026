@@ -12,7 +12,7 @@ public class playerControler : MonoBehaviour {
     public float desaceleracao = 1.5f; // Taxa de parada quando solta o acelerador
     public float forcaFreio = 5f;      // Força ao apertar para trás (S / Seta Baixo)
 
-    public GameObject shot, mira1, playerExplosion;
+    public GameObject shot, fogoFoguete,mira1, miraFoguete, playerExplosion;
     public Rigidbody2D rb;
     private float nextFire;
     
@@ -35,6 +35,7 @@ public class playerControler : MonoBehaviour {
         if (veloMotor > 0f)
         {
             rb.AddForce(transform.up * veloMotor * velocidade);
+            Instantiate(fogoFoguete, miraFoguete.transform.position, miraFoguete.transform.rotation);
         } 
         // Freio ativo (apertando para trás)
         else if (veloMotor < 0f)

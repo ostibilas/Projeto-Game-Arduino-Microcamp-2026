@@ -114,7 +114,7 @@ MonoBehaviour:
   asteroid1: {fileID: 1931937370891142}
   asteroid2: {fileID: 1664685807639328, guid: 8b51f4c9058cdc649bd046aac88c8556, type: 2}
   asteroid3: {fileID: 1931937370891142}
-  explosion: {fileID: 1795318553294728, guid: 618ceb5d34fdc42448f99310753b018c, type: 2}
+  explosion: {fileID: 1872655110912902, guid: f572f4e2acc01e14fbc768b9ab827165, type: 2}
   speed: 0
   rb: {fileID: 50137012657695422}
 --- !u!114 &114918668677744284
