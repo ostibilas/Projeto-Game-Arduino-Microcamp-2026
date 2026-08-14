@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114172216917820164}
   m_Layer: 0
   m_Name: PlayerTwoShot
-  m_TagString: tiro1
+  m_TagString: tiro2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

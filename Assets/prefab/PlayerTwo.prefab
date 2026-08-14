@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 114166596939671970}
   m_Layer: 0
   m_Name: PlayerTwo
-  m_TagString: player1
+  m_TagString: player2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -177,6 +177,7 @@ MonoBehaviour:
   velocidadeRotacao: 50
   rotacaoInput: 0
   fire_rate: 0.3
+  thisCollider: {fileID: 0}
   desaceleracao: 0.5
   forcaFreio: 1.5
   shot: {fileID: 1050128661189048, guid: 335506e65a3c0af43a20cb88bdbf6bca, type: 2}

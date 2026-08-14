@@ -7,7 +7,10 @@ public class playerControler : MonoBehaviour {
     public static int playerNum; // Caso for player 1 == 1;
     public int playerLife = 3;  // vida do jogador
     public float veloMotor, velocidade, tiroSeg, velocidadeRotacao, rotacaoInput, fire_rate;
-    
+    public Collider2D thisCollider;
+    private SpriteRenderer spriteRenderer;
+    public GameObject StageManager;
+
     [Header("Configurações de Freio")]
     public float desaceleracao = 1.5f; // Taxa de parada quando solta o acelerador
     public float forcaFreio = 5f;      // Força ao apertar para trás (S / Seta Baixo)
@@ -15,15 +18,46 @@ public class playerControler : MonoBehaviour {
     public GameObject shot, fogoFoguete,mira1, miraFoguete, playerExplosion;
     public Rigidbody2D rb;
     private float nextFire;
+
+    
     
 
     void Start () {
+         StageManager = GameObject.Find("StageManager");
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        thisCollider = GetComponent<Collider2D>();
+        StartCoroutine(IniciarPlayer());
+       
+        
         if (rb == null) {
             rb = GetComponent<Rigidbody2D>();
         }
+
+
+    }
+
+    public void DefinirAlpha(float alpha)
+    {
+        // Garante que o alpha fique entre 0.0 e 1.0
+        alpha = Mathf.Clamp01(alpha);
+
+        // No Unity, a cor precisa ser reatribuída por inteiro
+        Color corAtual = spriteRenderer.color;
+        corAtual.a = alpha;
+        spriteRenderer.color = corAtual;
+    }
+
+    IEnumerator IniciarPlayer() {
+        DefinirAlpha(0.5f);
+        thisCollider.enabled = false;
+        yield return new WaitForSeconds(2f);
+
+        DefinirAlpha(1f);
+        thisCollider.enabled = true;
     }
     
     void Update () {
+
 
         rotacaoInput = -Input.GetAxisRaw("Horizontal");
         veloMotor = Input.GetAxis("Vertical");  
@@ -59,19 +93,11 @@ public class playerControler : MonoBehaviour {
         print("BATEU");
         if(collider.gameObject.tag == "asteroid" || collider.gameObject.tag == "inimigo" || collider.gameObject.tag == "boss"){
             Instantiate(playerExplosion, transform.position, Quaternion.identity);  
-            stageManagerScript.player1Life--;
-            Destroy(this.gameObject, 0F);
+            if(playerNum == 1){StageManager.GetComponent<stageManagerScript>().TentarRessucitar(1);}
+            if(playerNum == 2){StageManager.GetComponent<stageManagerScript>().TentarRessucitar(2);}
+                       
+            Destroy(this.gameObject, 3F);
             
-            /*switch (playerNum)
-            { 
-                case 1:
-                comando;
-                break; 
-             default: comando ; break}
-            stageManagerScript.
-            Destroy(this.gameObject, 0F);
-
-            IEnumerator Rotina() {}*/
 
         }
     }   
