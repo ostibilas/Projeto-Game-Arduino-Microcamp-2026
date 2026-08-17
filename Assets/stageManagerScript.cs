@@ -23,7 +23,8 @@ public class stageManagerScript : MonoBehaviour {
     private bool esperandoProximoNivel = false;
 
     public GameObject PlayerOne, PlayerTwo, Asteroid1, Asteroid2, Asteroid3;
-    public int numPlayer;
+    public static int playerNum; // aterar via codigo
+    public int playernumTest; // apagar
     public GameObject atualPlayer1, atualPlayer2;
     public int stageLevel;
     public static float ScorePlayer1, ScorePlayer2; // vidas do player
@@ -32,12 +33,16 @@ public class stageManagerScript : MonoBehaviour {
     public Text TXT_PontosP1, TXT_PontosP2;
     public Text TXT_LIFEP1, TXT_LIFEP2;
 
+    private Vector3 posicaoSpawn1 = new Vector3(-1f, 0f, 0f);
+    private Vector3 posicaoSpawn2 = new Vector3(1f, 0f, 0f);
+
+
     // Use this for initialization
     void Start () {
         // AJUSTE: Define as vidas PRIMEIRO antes de instanciar ou rodar nível
         player1Life = 3;
         player2Life = 3;
-
+        playerNum = playernumTest;
         IniciarPlayer();
         IniciarNivel(nivelAtual);
     }
@@ -56,6 +61,9 @@ public class stageManagerScript : MonoBehaviour {
         //=========================Player1===================================== 
         if (TXT_PontosP1 != null) TXT_PontosP1.text = "Pontos P1: " + ((int)ScorePlayer1).ToString("D6");
         if (TXT_LIFEP1 != null) TXT_LIFEP1.text = "Vidas = " + ((int)player1Life).ToString("D2");
+        
+        print("scoreP1: "+ ScorePlayer1);
+        print("LIFEP1: "+player1Life);
 
         //=========================Player2=====================================
         if (TXT_PontosP2 != null) TXT_PontosP2.text = "Pontos P2: " + ((int)ScorePlayer2).ToString("D6");
@@ -118,12 +126,11 @@ public class stageManagerScript : MonoBehaviour {
     private IEnumerator RessucitarRoutine(int Qualplayer) {
     yield return new WaitForSeconds(1.5f);
 
-    Vector3 posicaoSpawn = new Vector3(transform.position.x, transform.position.y, 0f);
-
+    
     if (Qualplayer == 1) {
         if (player1Life > 0) {
             player1Life--;
-            atualPlayer1 = Instantiate(PlayerOne, posicaoSpawn, Quaternion.identity);
+            atualPlayer1 = Instantiate(PlayerOne, posicaoSpawn1, Quaternion.identity);
             Debug.Log("PLAYER 1 RESSUSCITOU! Vidas restantes: " + player1Life);
         } else {
             Debug.LogWarning("Player 1 tentou renascer, mas NÃO TEM VIDAS! (player1Life: " + player1Life + ")");
@@ -132,7 +139,7 @@ public class stageManagerScript : MonoBehaviour {
     else if (Qualplayer == 2) {
         if (player2Life > 0) {
             player2Life--;
-            atualPlayer2 = Instantiate(PlayerTwo, posicaoSpawn, Quaternion.identity);
+            atualPlayer2 = Instantiate(PlayerTwo, posicaoSpawn2, Quaternion.identity);
             Debug.Log("PLAYER 2 RESSUSCITOU! Vidas restantes: " + player2Life);
         } else {
             Debug.LogWarning("Player 2 tentou renascer, mas NÃO TEM VIDAS! (player2Life: " + player2Life + ")");
@@ -199,11 +206,11 @@ public class stageManagerScript : MonoBehaviour {
         ScorePlayer1 = 0f;    
         ScorePlayer2 = 0f;
          
-        if (numPlayer == 2) {
-            atualPlayer1 = Instantiate(PlayerOne, transform.position, Quaternion.identity);
-            atualPlayer2 = Instantiate(PlayerTwo, -transform.position, Quaternion.identity);
+        if (playerNum == 2) {
+            atualPlayer1 = Instantiate(PlayerOne, -transform.position, Quaternion.identity);
+            atualPlayer2 = Instantiate(PlayerTwo, transform.position, Quaternion.identity);
         } else {
-            atualPlayer1 = Instantiate(PlayerOne, transform.position, Quaternion.identity); 
+            atualPlayer1 = Instantiate(PlayerOne, -transform.position, Quaternion.identity); 
         }
     }
 }

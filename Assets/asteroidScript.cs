@@ -58,7 +58,7 @@ public class asteroidScript : MonoBehaviour {
 				// Instancia o segundo um pouco para a direita/baixo
 				Instantiate(asteroid2, pos + new Vector3(0.5f, -0.5f, 0f), Quaternion.identity);
 				
-			 stageManagerScript.ScorePlayer2+= 100f;
+			 stageManagerScript.ScorePlayer1+= 100f;
 			 Destroy(this.gameObject,0f);
 			 break;
 
@@ -74,13 +74,13 @@ public class asteroidScript : MonoBehaviour {
 				Instantiate(asteroid1, pos + new Vector3(0.5f, -0.5f, 0f), Quaternion.identity);
 				
 
-			 stageManagerScript.ScorePlayer2+= 50f;
+			 stageManagerScript.ScorePlayer1+= 50f;
 			 Destroy(this.gameObject,0f);
 			 break;
 			 
 			 case 1: 
 			 Instantiate(explosion, this.transform.position, this.transform.rotation);
-			 stageManagerScript.ScorePlayer2+= 50f;
+			 stageManagerScript.ScorePlayer1+= 50f;
 			 Destroy(this.gameObject,0f);
 			 break;  
 			}

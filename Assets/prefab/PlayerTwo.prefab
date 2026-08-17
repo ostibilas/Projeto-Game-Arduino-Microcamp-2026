@@ -81,7 +81,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1621481830335448}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.6, y: -1.05, z: -3006.0002}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 0}
   m_Children:
   - {fileID: 4323323992248738}
@@ -170,14 +170,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58f24ed029973e43a4a86b34a599ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLife: 3
+  PlayerControler: 2
   veloMotor: 0
   velocidade: 0.0001
   tiroSeg: 0
-  velocidadeRotacao: 50
+  velocidadeRotacao: 70
   rotacaoInput: 0
   fire_rate: 0.3
   thisCollider: {fileID: 0}
+  StageManager: {fileID: 0}
   desaceleracao: 0.5
   forcaFreio: 1.5
   shot: {fileID: 1050128661189048, guid: 335506e65a3c0af43a20cb88bdbf6bca, type: 2}

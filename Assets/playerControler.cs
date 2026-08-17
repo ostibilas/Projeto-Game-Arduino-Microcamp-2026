@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class playerControler : MonoBehaviour {
 
-    public static int playerNum; // Caso for player 1 == 1;
-    public int playerLife = 3;  // vida do jogador
+     // Caso for player 1 == 1;
+    public int PlayerControler;  // vida do jogador
     public float veloMotor, velocidade, tiroSeg, velocidadeRotacao, rotacaoInput, fire_rate;
     public Collider2D thisCollider;
     private SpriteRenderer spriteRenderer;
@@ -50,7 +50,7 @@ public class playerControler : MonoBehaviour {
     IEnumerator IniciarPlayer() {
         DefinirAlpha(0.5f);
         thisCollider.enabled = false;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         DefinirAlpha(1f);
         thisCollider.enabled = true;
@@ -93,10 +93,24 @@ public class playerControler : MonoBehaviour {
         print("BATEU");
         if(collider.gameObject.tag == "asteroid" || collider.gameObject.tag == "inimigo" || collider.gameObject.tag == "boss"){
             Instantiate(playerExplosion, transform.position, Quaternion.identity);  
-            if(playerNum == 1){StageManager.GetComponent<stageManagerScript>().TentarRessucitar(1);}
-            if(playerNum == 2){StageManager.GetComponent<stageManagerScript>().TentarRessucitar(2);}
+            if(stageManagerScript.playerNum == 1){
+                if(PlayerControler==1){
+                 StageManager.GetComponent<stageManagerScript>().TentarRessucitar(1);
+                }
+               
+                
+                }
+            if(stageManagerScript.playerNum == 2){
+                 if(PlayerControler==1){
+                 StageManager.GetComponent<stageManagerScript>().TentarRessucitar(1);
+                }
+                 if(PlayerControler==2){
+                 StageManager.GetComponent<stageManagerScript>().TentarRessucitar(2);
+                }
+                              
+            }
                        
-            Destroy(this.gameObject, 3F);
+            Destroy(this.gameObject, 0F);
             
 
         }
