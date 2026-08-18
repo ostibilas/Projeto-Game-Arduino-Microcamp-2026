@@ -8,9 +8,9 @@ public class asteroidScript : MonoBehaviour {
 	public GameObject asteroid1, asteroid2, asteroid3, explosion;
 	public float speed; 
 	public Rigidbody2D rb;
-
-		
+	public Vector3 pos;
 	
+
 	void start () {
 		switch (tamanho)
 		{
@@ -38,28 +38,33 @@ public class asteroidScript : MonoBehaviour {
 
 	void OnTriggerEnter2D ( Collider2D collider ) {
 		
+		if(collider.gameObject.tag == "tiro1") {
 
-		if(collider.gameObject.tag == "tiro1" || collider.gameObject.tag == "tiro2"){
 		switch (tamanho)
-		{
-			case 3:
-			Instantiate(explosion, this.transform.position,this.transform.rotation);
-			Instantiate(asteroid2, transform.position,Quaternion.identity);
-			Instantiate(asteroid2, transform.position,Quaternion.identity);
-			Destroy(this.gameObject,0f);
-			break;
+				{
+				case 3:
+				Instantiate(explosion, this.transform.position,this.transform.rotation);
+				pos = transform.position;
+				Instantiate(asteroid2, pos = new Vector3(-0.5f,0.5f, 0f), Quaternion.identity);
+				Instantiate(asteroid2, pos = new Vector3(0.5f,-0.5, 0f), Quaternion.identity);
+				stageManagerScript.ScorePlayer2+= 100f;
+				Destroy(this.gameObject,0f);
+				break;
 
-			case 2:
-			Instantiate(explosion, this.transform.position,this.transform.rotation);
-			Instantiate(asteroid1, transform.position,Quaternion.identity);
-			Instantiate(asteroid1, transform.position,Quaternion.identity);
-			Destroy(this.gameObject,0f);
-			break;
+				case 2:
+				Instantiate(explosion, this.transform.position,this.transform.rotation);
+				pos = transform.position;
+				Instantiate(asteroid1, pos + new  Vector3(-0.5f,0.5f, 0f), Quaternion.identity);
+				Instantiate(asteroid1, pos + new  Vector3(0.5f,-0.5f, 0f),Quaternion.identity);
+				stageManagerScript.ScorePlayer2+= 50f;
+				Destroy(this.gameObject,0f);
+				break;
 
-			case 1:
-			Instantiate(explosion, this.transform.position, this.transform.rotation);
-			Destroy(this.gameObject,0f);
-			break;
+				case 1:
+				Instantiate(explosion, this.transform.position, this.transform.rotation);
+				stageManagerScript.ScorePlayer2+= 15f;
+				Destroy(this.gameObject,0f);
+				break;
 
 		}
 	
