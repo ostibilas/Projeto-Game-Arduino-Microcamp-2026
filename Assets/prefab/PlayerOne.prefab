@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58f24ed029973e43a4a86b34a599ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerControler: 1
+  PlayerControlerNum: 1
   veloMotor: 0
   velocidade: 0.0001
   tiroSeg: 0
@@ -177,6 +177,7 @@ MonoBehaviour:
   playerExplosion: {fileID: 1795318553294728, guid: 618ceb5d34fdc42448f99310753b018c,
     type: 2}
   rb: {fileID: 50771924075661180}
+  jogoPausado: 0
 --- !u!114 &114616296474677712
 MonoBehaviour:
   m_ObjectHideFlags: 1

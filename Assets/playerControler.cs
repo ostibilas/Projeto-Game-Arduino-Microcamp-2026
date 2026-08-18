@@ -34,9 +34,9 @@ public class playerControler : MonoBehaviour {
         }
          if (PlayerControlerNum ==2)
         {
-            horizontalPlayer = "horizontal2";
-            verticalPlayer = "vertical2";
-            firePlayer = "fire2";
+            horizontalPlayer = "Horizontal2";
+            verticalPlayer = "Vertical2";
+            firePlayer = "Fire2";
             pausePlayer = "pause2";
         
         }
