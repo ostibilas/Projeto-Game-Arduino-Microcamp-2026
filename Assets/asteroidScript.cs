@@ -4,134 +4,103 @@ using UnityEngine;
 
 public class asteroidScript : MonoBehaviour {
 
-	public int tamanho; // tamanho 3 ou 2 ou 1
-	public GameObject asteroid1,asteroid2,asteroid3,explosion;
-	public float speed;
-	public Rigidbody2D rb;
-	public Vector3 pos;
+    public int tamanho; // tamanho 3 (Grande), 2 (Médio) ou 1 (Pequeno)
+    public GameObject asteroid1, asteroid2, asteroid3, explosion;
+    public float speed;
+    public Rigidbody2D rb;
+    public Vector3 pos;
 
-	// Use this for initialization
-	void Start () {
-		switch (tamanho)
-		{ 
-			case 1: 
-			speed = 0.0003f; 
-			break; 
+    private stageManagerScript stageManager;
+    private bool jaDestruido = false; // Evita que colisões duplas processem o código duas vezes
 
-			case 2: 
-			speed = 0.0002f;  
-			break; 
+    void Start () {
+        // Encontra o StageManager e registra este asteroide no contador
+        GameObject managerObj = GameObject.Find("StageManager");
+        if (managerObj != null) {
+            stageManager = managerObj.GetComponent<stageManagerScript>();
+            stageManager.RegistrarAsteroide();
+        } else {
+            Debug.LogError("StageManager não encontrado na cena!");
+        }
 
-			case 3: 
-			speed = 0.0001f;  
-			break; 
-			
-		}
+        // Configuração de velocidade baseada no tamanho
+        switch (tamanho)
+        { 
+            case 1: 
+                speed = 0.0003f; 
+                break; 
 
-		Vector2 randomDirection = Random.insideUnitCircle.normalized;
-		rb.AddForce(randomDirection * speed, ForceMode2D.Impulse);
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+            case 2: 
+                speed = 0.0002f;  
+                break; 
 
-	void OnTriggerEnter2D ( Collider2D collider ) {
-		
+            case 3: 
+                speed = 0.0001f;  
+                break; 
+        }
 
-		if(collider.gameObject.tag == "tiro1"){
-		
-		switch (tamanho)
-			{
-			  
-			 case 3: 
-			 Instantiate(explosion, this.transform.position, this.transform.rotation);
-			 
-			 // Define a posição atual como base
-				 pos = transform.position;
+        if (rb != null) {
+            Vector2 randomDirection = Random.insideUnitCircle.normalized;
+            rb.AddForce(randomDirection * speed, ForceMode2D.Impulse);
+        }
+    }
 
-				// Instancia o primeiro um pouco para a esquerda/cima
-				Instantiate(asteroid2, pos + new Vector3(-0.5f, 0.5f, 0f), Quaternion.identity);
+    void OnTriggerEnter2D (Collider2D collider) {
+        if (jaDestruido) return;
 
-				// Instancia o segundo um pouco para a direita/baixo
-				Instantiate(asteroid2, pos + new Vector3(0.5f, -0.5f, 0f), Quaternion.identity);
-				
-			 stageManagerScript.ScorePlayer1+= 100f;
-			 Destroy(this.gameObject,0f);
-			 break;
+        bool atingidoP1 = collider.gameObject.CompareTag("tiro1");
+        bool atingidoP2 = collider.gameObject.CompareTag("tiro2");
 
-			 case 2: 
-			 Instantiate(explosion, this.transform.position, this.transform.rotation);
-				// Define a posição atual como base	
-				 pos = transform.position;
+        if (atingidoP1 || atingidoP2) {
+            jaDestruido = true;
 
-				// Instancia o primeiro um pouco para a esquerda/cima
-				Instantiate(asteroid1, pos + new Vector3(-0.5f, 0.5f, 0f), Quaternion.identity);
+            // Destrói o tiro que colidiu
+            Destroy(collider.gameObject);
 
-				// Instancia o segundo um pouco para a direita/baixo
-				Instantiate(asteroid1, pos + new Vector3(0.5f, -0.5f, 0f), Quaternion.identity);
-				
+            // Efeito visual de explosão
+            if (explosion != null) {
+                Instantiate(explosion, transform.position, transform.rotation);
+            }
 
-			 stageManagerScript.ScorePlayer1+= 50f;
-			 Destroy(this.gameObject,0f);
-			 break;
-			 
-			 case 1: 
-			 Instantiate(explosion, this.transform.position, this.transform.rotation);
-			 stageManagerScript.ScorePlayer1+= 50f;
-			 Destroy(this.gameObject,0f);
-			 break;  
-			}
+            pos = transform.position;
 
-		}
-		
-		if(collider.gameObject.tag == "tiro2"){
-		
-		switch (tamanho)
-			{
-			 case 3: 
-			 Instantiate(explosion, this.transform.position, this.transform.rotation);
-			 
-			 // Define a posição atual como base
-				 pos = transform.position;
+            // Divisão dos Asteroides (Os novos criados rodarão seu próprio Start e RegistrarAsteroide)
+            switch (tamanho) {
+                case 3: 
+                    if (asteroid2 != null) {
+                        Instantiate(asteroid2, pos + new Vector3(-0.5f, 0.5f, 0f), Quaternion.identity);
+                        Instantiate(asteroid2, pos + new Vector3(0.5f, -0.5f, 0f), Quaternion.identity);
+                    }
+                    AdicionarPontos(atingidoP1, 100f);
+                    break;
 
-				// Instancia o primeiro um pouco para a esquerda/cima
-				Instantiate(asteroid2, pos + new Vector3(-0.5f, 0.5f, 0f), Quaternion.identity);
+                case 2: 
+                    if (asteroid1 != null) {
+                        Instantiate(asteroid1, pos + new Vector3(-0.5f, 0.5f, 0f), Quaternion.identity);
+                        Instantiate(asteroid1, pos + new Vector3(0.5f, -0.5f, 0f), Quaternion.identity);
+                    }
+                    AdicionarPontos(atingidoP1, 50f);
+                    break;
 
-				// Instancia o segundo um pouco para a direita/baixo
-				Instantiate(asteroid2, pos + new Vector3(0.5f, -0.5f, 0f), Quaternion.identity);
-				
-			 stageManagerScript.ScorePlayer2+= 100f;
-			 Destroy(this.gameObject,0f);
-			 break;
+                case 1: 
+                    AdicionarPontos(atingidoP1, 50f);
+                    break;  
+            }
 
-			 case 2: 
-			 Instantiate(explosion, this.transform.position, this.transform.rotation);
-				// Define a posição atual como base	
-				 pos = transform.position;
+            // Notifica o StageManager que este asteroide foi removido
+            if (stageManager != null) {
+                stageManager.RemoverAsteroide();
+            }
 
-				// Instancia o primeiro um pouco para a esquerda/cima
-				Instantiate(asteroid1, pos + new Vector3(-0.5f, 0.5f, 0f), Quaternion.identity);
+            Destroy(gameObject);
+        }
+    }
 
-				// Instancia o segundo um pouco para a direita/baixo
-				Instantiate(asteroid1, pos + new Vector3(0.5f, -0.5f, 0f), Quaternion.identity);
-				
-
-			 stageManagerScript.ScorePlayer2+= 50f;
-			 Destroy(this.gameObject,0f);
-			 break;
-			 
-			 case 1: 
-			 Instantiate(explosion, this.transform.position, this.transform.rotation);
-			 stageManagerScript.ScorePlayer2+= 50f;
-			 Destroy(this.gameObject,0f);
-			 break;  
-			}
-
-		}
-
-	}
-
+    private void AdicionarPontos(bool ehPlayer1, float pontos) {
+        if (ehPlayer1) {
+            stageManagerScript.ScorePlayer1 += pontos;
+        } else {
+            stageManagerScript.ScorePlayer2 += pontos;
+        }
+    }
 }
