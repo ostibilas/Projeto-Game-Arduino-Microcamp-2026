@@ -40,7 +40,7 @@ public class stageManagerScript : MonoBehaviour {
     void Start () {
         player1Life = 3;
         player2Life = 3;
-        playerNum = playernumTest;
+        //playerNum = playernumTest;
         IniciarPlayer();
         IniciarNivel(nivelAtual);
     }
