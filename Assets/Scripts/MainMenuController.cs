@@ -9,6 +9,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Button button1Player;
     [SerializeField] private Button button2Players;
     [SerializeField] private Button buttonCredits;
+    [SerializeField] private Button buttonMainMenu;
 
     [Header("Painéis / Cenas")]
     [SerializeField] private GameObject creditsPanel; // Se for um painel na mesma cena
@@ -28,6 +29,9 @@ public class MainMenuController : MonoBehaviour
 
         if (buttonCredits != null)
             buttonCredits.onClick.AddListener(OnCreditsClicked);
+       
+        if (buttonMainMenu != null)
+            buttonMainMenu.onClick.AddListener(MainMenuClicked);    
     }
 
     private void Update()
