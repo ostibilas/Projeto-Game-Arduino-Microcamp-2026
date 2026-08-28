@@ -55,6 +55,8 @@ MonoBehaviour:
   - {fileID: 1931937370891142, guid: a3c45818c1d9be84db644db37f57def4, type: 2}
   - {fileID: 1664685807639328, guid: 8b51f4c9058cdc649bd046aac88c8556, type: 2}
   - {fileID: 1098325245398010, guid: 20cb4d17cd9e2524ba363d4bcdc2e99a, type: 2}
+  pauseMenuUI: {fileID: 0}
+  firstSelectedButton: {fileID: 0}
   distanciaMinimaCentro: 3
   limitesTela: {x: 6.5, y: 4.8}
   textoNivel: {fileID: 0}

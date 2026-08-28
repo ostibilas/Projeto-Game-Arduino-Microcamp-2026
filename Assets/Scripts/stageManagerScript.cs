@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class stageManagerScript : MonoBehaviour {
     
     [Header("Prefabs dos Asteroides")]
     public GameObject[] prefabsAsteroides;
+    public GameObject pauseMenuUI,mainMenuUI;
+    public GameObject firstSelectedButton;
 
     [Header("Configurações do Spawner")]
     public float distanciaMinimaCentro = 3f;
@@ -33,16 +37,23 @@ public class stageManagerScript : MonoBehaviour {
     
     public Text TXT_PontosP1, TXT_PontosP2;
     public Text TXT_LIFEP1, TXT_LIFEP2;
+    public static bool isPaused = false;
 
     private Vector3 posicaoSpawn1 = new Vector3(-1f, 0f, 0f);
     private Vector3 posicaoSpawn2 = new Vector3(1f, 0f, 0f);
 
     void Start () {
+
         player1Life = 3;
         player2Life = 3;
         //playerNum = playernumTest;
         IniciarPlayer();
         IniciarNivel(nivelAtual);
+        pauseMenuUI.SetActive(false);
+        mainMenuUI.SetActive(false);
+        isPaused = false;
+        Time.timeScale = 1f;
+
     }
     
     void Update () {
@@ -52,6 +63,36 @@ public class stageManagerScript : MonoBehaviour {
 
         if (TXT_PontosP2 != null) TXT_PontosP2.text = "Pontos P2: " + ((int)ScorePlayer2).ToString("D6");
         if (TXT_LIFEP2 != null) TXT_LIFEP2.text = "Vidas = " + ((int)player2Life).ToString("D2");
+    // Exemplo usando o Input System Antigo (Button "Start" configurado no Input Manager)
+    if (Input.GetButtonDown("Pause1") || Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.Escape) && isPaused == false)
+        {
+            Pause();
+            isPaused = true;
+            Time.timeScale = 0f;
+        }
+    }
+
+    public void Pause()
+    {
+        pauseMenuUI.SetActive(true);
+        mainMenuUI.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
+
+        // Limpa qualquer seleção anterior e força o foco no primeiro botão
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstSelectedButton);
+    }
+
+    public void Resume()
+    {
+        pauseMenuUI.SetActive(false);
+        mainMenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+
+        // Limpa a seleção ao fechar para não manter destaque em botões invisíveis
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     // REGISTRO: Chamado pelo asteroide assim que ele é criado
@@ -68,6 +109,10 @@ public class stageManagerScript : MonoBehaviour {
             totalAsteroidesVivos = 0; // Trava de segurança
             StartCoroutine(ProximoNivelRoutine());
         }
+    }
+
+    public void botaoVoltarMenu(){
+        SceneManager.LoadScene("MainMenu");
     }
 
     int ObterQuantidadePorNivel(int nivel) {

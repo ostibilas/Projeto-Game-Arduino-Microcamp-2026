@@ -160,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerControlerNum: 1
   veloMotor: 0
-  velocidade: 0.0001
+  velocidade: 0.00007
   tiroSeg: 0
   velocidadeRotacao: 70
   rotacaoInput: 0
